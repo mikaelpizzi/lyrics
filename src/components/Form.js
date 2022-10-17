@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { useState } from "react";
 
 const Form = ({ saveLyricSearch }) => {
@@ -85,5 +87,9 @@ const Form = ({ saveLyricSearch }) => {
         </div>
         );
 }
- 
+
+Form.propTypes = {
+    saveLyricSearch: PropTypes.func.isRequired
+}
+
 export default Form;
