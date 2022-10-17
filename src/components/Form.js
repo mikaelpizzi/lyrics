@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Form = () => {
+const Form = ({ saveLyricSearch }) => {
 
     const [ search, saveSearch ] = useState({
         artist: '',
@@ -27,12 +27,14 @@ const Form = () => {
             return;
         }
         saveError(false);
-        
+
         // Pass data to principal component
+        saveLyricSearch(search);
 
     }
     return (  
         <div className="bg-info">
+            { error ? <p className="alert alert-danger text-center pd-2">All Fields Are Required</p> : null }
             <div className="container">
                 <div className="row">
                     <form
