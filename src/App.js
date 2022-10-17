@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import Form from "./components/Form";
 import axios from "axios";
 import Song from "./components/Song";
+import Info from "./components/Info";
 
 function App() {
 
@@ -23,11 +24,11 @@ function App() {
         axios(url2)
       ])
       saveLyrics(lyrics.data.lyrics);
-      saveInfo(info.data.artist[0]);
+      saveInfo(info.data.artists[0]);
     }
     consultLyricsApi();
 
-  }, [lyricsearch]);
+  }, [lyricsearch, info]);
   return (
     <Fragment>
       <Form 
@@ -37,7 +38,9 @@ function App() {
       <div className="container mt-5">
         <div className="row">
             <div className="col-md-6">
-
+              <Info
+                info={info}
+              />
             </div>
             <div className="col-md-6">
               <Song
