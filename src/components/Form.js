@@ -1,9 +1,42 @@
+import { useState } from "react";
+
 const Form = () => {
+
+    const [ search, saveSearch ] = useState({
+        artist: '',
+        song: ''
+    });
+    const [ error, saveError ] = useState(false);
+
+    const { artist, song } = search;
+
+    // Function for every input for reading content
+    const updateState = e => {
+        saveSearch({
+            ...search,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    // Consult APIs
+    const searchInfo = e => {
+        e.preventDefault();
+
+        if (artist.trim() === '' || song.trim() === '') {
+            saveError(true);
+            return;
+        }
+        saveError(false);
+        
+        // Pass data to principal component
+
+    }
     return (  
         <div className="bg-info">
             <div className="container">
                 <div className="row">
                     <form
+                        onSubmit={searchInfo}
                         className="col card text-white bg-transparent mb-5 pt-5 pb-2"
                     >
                         <fieldset>
@@ -18,6 +51,8 @@ const Form = () => {
                                             className="form-control"
                                             name="artist"
                                             placeholder="Artist Name"
+                                            onChange={updateState}
+                                            value={artist}
                                         />
                                     </div>
                                 </div>
@@ -30,6 +65,8 @@ const Form = () => {
                                             className="form-control"
                                             name="song"
                                             placeholder="Song Name"
+                                            onChange={updateState}
+                                            value={song}
                                         />
                                     </div>
                                 </div>
