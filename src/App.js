@@ -8,6 +8,7 @@ function App() {
   // Define state
   const [ lyricsearch, saveLyricSearch ] = useState({});
   const [ lyrics, saveLyrics ] = useState('');
+  const [ info, saveInfo ] = useState({});
 
   useEffect(() => {
     if (Object.keys(lyricsearch).length === 0) return;
@@ -15,10 +16,14 @@ function App() {
     const consultLyricsApi = async () => {
       const { artist, song } = lyricsearch;
       const url = `https://api.lyrics.ovh/v1/${artist}/${song}`;
+      const url2 = `https://www.theaudiodb.com/api/v1/json/2/search.php?s=${artist}`;
 
-      const result = await axios(url);
-
-      saveLyrics(result.data.lyrics);
+      const [ lyrics, info ] = await Promise.all([
+        axios(url),
+        axios(url2)
+      ])
+      saveLyrics(lyrics.data.lyrics);
+      saveInfo(info.data.artist[0]);
     }
     consultLyricsApi();
 
